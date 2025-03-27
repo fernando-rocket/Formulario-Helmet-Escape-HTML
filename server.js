@@ -5,11 +5,12 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const escapeHtml = require('escape-html')
 require('dotenv').config()
+const userController = require('./controller/user.controller')
 
 const app = express()
 
 const PORT = process.env.PORT || 3000
-const DATABASE_LINK = process.env.DATABASE_LINK
+const DATABASE_LINK = process.env.DATABASE_LINK || "mongodb://127.0.0.1:27017/test"
 // const PORT = 3000
 
 //MIDLEWARE PARA DEFINIR CONTENT-SECURITY-POLICY
@@ -35,6 +36,7 @@ let info = ""
 app.post('/', (req, res) => {
     info = req.body.userform
     console.log(info)
+    userController.createUser(req.body.userform)
     res.redirect('/test')
 })
 
